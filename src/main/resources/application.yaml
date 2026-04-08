@@ -1,0 +1,8 @@
+server:
+  port: 8080 #서버 포트 8080
+
+spring:
+  application:
+    name: my_api
+  profiles: #기본 프로파일 설정
+    default: dev

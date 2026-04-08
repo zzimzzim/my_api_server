@@ -1,0 +1,24 @@
+hoglobal:
+  scrape_interval: 10s #20 ~ 60초 사이
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: [ 'prometheus:9090' ]
+
+  # Spring Boot 앱 (HikariCP 메트릭 포함)
+  - job_name: 'spring-boot-app'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ '172.29.8.52:8080' ] #'host.docker.internal:8080' host.docker.internal은 windows로 간다.
+        #wsl환경에서는 IP를 직접 넣어줘야 한다. 명령어: hostname -I
+        labels:
+          application: 'my_api'
+
+  # PostgreSQL 모니터링
+  - job_name: 'postgres-exporter'
+    static_configs:
+      - targets: [ 'postgres-exporter:9187' ]
+        labels:
+          application: 'my_api'
