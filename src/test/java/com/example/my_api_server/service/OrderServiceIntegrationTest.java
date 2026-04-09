@@ -158,7 +158,7 @@ public class OrderServiceIntegrationTest {
         @DisplayName("주문 생성 시 상품 개수 조회 테스트")
         public void createOrderStockValueCheck() {
             //given
-            List<Long> counts = List.of(10L, 10L);
+            List<Long> counts = List.of(10L, 10L); //그냥 리스트 만드는거 내부 원소는 10, 10
 
             Member savedMember = getSavedMember("1234");
 
