@@ -14,7 +14,7 @@ public class SyncCounter {
 
     public static void main(String[] args) {
         List<Thread> threads = new ArrayList<>();
-        int threadCount = 5;
+        int threadCount = 100;
         SyncCounter counter = new SyncCounter();
 
         //스레드 생성
@@ -23,6 +23,8 @@ public class SyncCounter {
             thread.start();
             threads.add(thread);//스레드 리스드에 스레드 삽입
         }
+
+        //스레드의 일이 다 끝날때까지 기다림
         threads.forEach(thread ->
         {
             try {
@@ -35,17 +37,17 @@ public class SyncCounter {
         log.info("기대값 : {}", counter.getCount());
     }
 
-    private synchronized void increaseCount() {
+    private void increaseCount() {
 
         //스레드 1번이 들어오면서 락을 획득합니다.
         State state = Thread.currentThread().getState();
         log.info("state1 = {}", state.toString());
-        
-        //해당 범위만 락을 얻겠다.
-//        synchronized (this) {
-//            log.info("state2 = {}", state.toString());
-//            count++;
-//        }
+
+        //해당 범위만 락을 얻겟다!(스레드 1 -> 스레드 2 -> 스레드 3)
+        synchronized (this) { //락으로 순서 제어
+            log.info("state2(락을 얻는 부분) = {}", state.toString());
+            count++; //연산..
+        }
         //스레드 1번이 락을 반환합니다.
         log.info("state3 = {}", state.toString());
     }

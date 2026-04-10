@@ -17,7 +17,7 @@ public class ReentrantCounter {
 
     public static void main(String[] args) {
         List<Thread> threads = new ArrayList<>();
-        int threadCount = 1000;
+        int threadCount = 10;
         ReentrantCounter counter = new ReentrantCounter();
 
         //스레드 생성

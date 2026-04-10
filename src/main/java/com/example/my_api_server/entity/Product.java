@@ -38,10 +38,10 @@ public class Product {//상품
 
     private Long stock;//재고
     //상품명, 상품번호, 상품타입(의류, 음식등), 가격, 재고수량
-    //필요한 것만 바꿀수있게 Setter처럼 변경할수 있게하고, 네이밍은 의미있는 메서드로 만들어둡니다.
     @Version
     private Long version;
 
+    //필요한 것만 바꿀수있게 Setter처럼 변경할수 있게하고, 네이밍은 의미있는 메서드로 만들어둡니다.
     public void changeProductName(String changeProductName) {
         this.productName = changeProductName;
     }

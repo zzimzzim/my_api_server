@@ -30,6 +30,7 @@ public class OrderControler {
 
     @GetMapping("/{id}")
     public OrderResponseDto findOrder(@PathVariable Long id) {
+
         return orderService.findOrder(id);
     }
 

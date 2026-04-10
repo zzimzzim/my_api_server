@@ -9,4 +9,6 @@ public class MemberSignUpEvent {//이벤트 객체(리스너로 보낼 데이터
     private final Long id;
     private final String email;
 
+    //추가 파라미터
+    private final String serialNum;
 }

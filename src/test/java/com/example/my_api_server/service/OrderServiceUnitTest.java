@@ -46,6 +46,7 @@ class OrderServiceUnitTest {
     @InjectMocks //실제 테스트할 대상 클래스(Mock 객체를 자동으로 주입받는다.)
     OrderService orderService;
 
+    //초기 데이터용 클래스 객체
     InitData initData;
     OrderCreateDto orderCreateDto;
 
@@ -102,7 +103,7 @@ class OrderServiceUnitTest {
     @DisplayName("[HAPPY]주문 요청이 정상적으로 잘 등록된다")
     public void createOrderSuccess() {
         //given(when절에 필요한 데이터들 생성)
-        Long stockId = 1L;//공통 데이터 말고 추가적인 테스트 데이터 필요 시 추가
+        //Long stockId = 1L;//공통 데이터 말고 추가적인 테스트 데이터 필요 시 추가
 
         //DB와 통신하지 않게 우리가 proxy처럼 임의로 실행 시켜줘야한다.
         when(productRepo.findAllById(initData.productIds)).thenReturn(
@@ -114,16 +115,14 @@ class OrderServiceUnitTest {
                                                  invocation.getArgument(0));
 
         //when(테스트할 메서드)
-        LocalDateTime orderTime = LocalDateTime.now();//시간 생성
-        OrderResponseDto dto = orderService.createOrder(orderCreateDto, orderTime);
+        OrderResponseDto dto = orderService.createOrder(orderCreateDto);
 
         //then(값 검증)
         ArgumentCaptor<Order> capture = ArgumentCaptor.forClass(Order.class);
         verify(orderRepo).save(capture.capture());
 
-        assertThat(dto.isSuccess()).isTrue();
-        assertThat(dto.getOrderStatus()).isEqualTo(OrderStatus.COMPLETED);
-
+        assertThat(dto.isSuccess()).isTrue(); //성공 여부 검증
+        assertThat(dto.getOrderStatus()).isEqualTo(OrderStatus.COMPLETED); //주문 상태 검증
     }
 
 
@@ -131,6 +130,7 @@ class OrderServiceUnitTest {
     @DisplayName("[Exception]주문 요청시 재고 부족하면 예외처리가 정상적으로 잘 동작한다")
     public void productStockValid() {
         //given(when절에 필요한 데이터들 생성)
+        //공통적으로 데이터를 사용하지않는 케이스(재고 관련해서 조금 수정필요하다)
         Long memberId = 1L;
         List<Long> productIds = List.of(1L, 2L);
         List<Long> counts = List.of(10L, 20L);
@@ -166,8 +166,7 @@ class OrderServiceUnitTest {
         //when(테스트할 메서드)
 
         //then(값 검증)
-        LocalDateTime orderTime = LocalDateTime.now();//시간 생성
-        assertThatThrownBy(() -> orderService.createOrder(createDto, orderTime))
+        assertThatThrownBy(() -> orderService.createOrder(createDto))
           .isInstanceOf(RuntimeException.class)//해당 예외 클래스가 어떤건지 지정합니다.
           .hasMessage("재고가 음수이니 주문 할 수 없습니다!"); //해당 예외 메시지가 어떤건지 지정
     }
@@ -183,10 +182,12 @@ class OrderServiceUnitTest {
         when(memberDBRepo.findById(initData.memberId)).thenReturn(Optional.of(initData.member));
 
         //when(테스트할 메서드)
-        LocalDateTime orderTime = LocalDateTime.now();//시간 생성
-        OrderResponseDto dto = orderService.createOrder(orderCreateDto, orderTime);
+        //테스트가 시간여부에따라서 달라진다는거죠(이게 좋을까요?)
+        LocalDateTime orderTime = LocalDateTime.parse("2026-04-03T13:00:00");
+        OrderResponseDto dto = orderService.createOrder(orderCreateDto);
 
         //then(값 검증)
+        //Cannot invoke "com.example.my_api_server.entity.Order.getOrderTime()" because "savedOrder" is null
         assertThat(dto).isNotNull();
     }
 
@@ -202,5 +203,9 @@ class OrderServiceUnitTest {
         public Product product2;
 
         public Member member;
+
+        public void init(){
+            //내부 초기화
+        }
     }
 }

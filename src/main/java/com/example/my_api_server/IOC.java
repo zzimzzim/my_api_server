@@ -4,9 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+//실제 스프링에게 빈(객체)으로 등록하게 해주는 설정
+
 @Component
-@Configuration
+//@Configuration
 public class IOC {
+
+    //@Bean
+    //메서드 단위로 등록을합니다. 메서드의 리턴 타입, IOC_TEST를 IOC 컨테이너에 등록해준다!
+    public void func1(){
+        System.out.println("func1 실행");
+    };
+
 
     public static void main(String[] args) {
         //객체 생성
@@ -21,11 +30,5 @@ public class IOC {
         ioc.func1();
     }
 
-    ;
-
-    @Bean
-    public void func1() {
-        System.out.print("func1 실행");
-    }
 }
 //IOC 컨테이너에 등록이 됩니다. (객체 = 물건, 단 하나만 생성이 됩니다!, 싱글톤 패턴)

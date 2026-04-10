@@ -1,6 +1,7 @@
 package com.example.my_api_server.service;
 
 import com.example.my_api_server.entity.Member;
+import com.example.my_api_server.event.MemberSignUpEvent;
 import com.example.my_api_server.repo.MemberDBRepo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,12 @@ public class MemberPointService {
             throw new RuntimeException(e);
         }
         memberDBRepo.findAll();
+    }
+
+    public String sendEmail(MemberSignUpEvent event, Long serialID){
+
+        //코드가 변경됬습니다
+        //알림보내는데 기타 로직이
+        return "1";
     }
 }

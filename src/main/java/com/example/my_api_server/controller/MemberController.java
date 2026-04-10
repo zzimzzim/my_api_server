@@ -23,6 +23,10 @@ public class MemberController {
     //회원가입
     @PostMapping //POST(리소스 등록, 약속)
     public Long signUp(@Validated @RequestBody MemberSignUpDto dto) {
+        log.info("스레드 이름 : {} ", Thread.currentThread().getName());
+        log.info("스레드 상태 : {} ", Thread.currentThread().getState());
+        log.info("스레드 그룹 : {} ", Thread.currentThread().getThreadGroup());
+        log.info("스레드 우선순위 : {} ", Thread.currentThread().getPriority());
         System.out.println("email = " + dto.email());
         System.out.println("password = " + dto.password());
 

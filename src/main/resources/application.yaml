@@ -2,6 +2,9 @@ server:
   port: 8080 #서버 포트 8080
 
 spring:
+#  threads: //모든 스레드를 가상스레드로 전환
+#    virtual:
+#      enabled: true
   application:
     name: my_api
   profiles: #기본 프로파일 설정

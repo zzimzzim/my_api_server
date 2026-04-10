@@ -42,7 +42,7 @@ public class OrderService {
     다른사람이 읽기 좋은 코드
      */
     @Transactional
-    public OrderResponseDto createOrder(OrderCreateDto dto, LocalDateTime orderTime) {
+    public OrderResponseDto createOrder(OrderCreateDto dto) {
         Member member = memberRepo.findById(dto.memberId())
                           .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
 
@@ -67,7 +67,7 @@ public class OrderService {
 //        List<Product> products = dto.productId().stream()
 //            .map((pId) -> productRepo.findById(pId).orElseThrow())
 //            .toList();
-        Order order = Order.createOrder(member, orderTime);
+        Order order = Order.createOrder(member, dto.orderTime());
         List<Product> products = productRepo.findAllById(dto.productId()); //IN 쿼리
         List<OrderProduct> orderProducts = IntStream.range(0, dto.count().size())
                                              .mapToObj(idx -> {

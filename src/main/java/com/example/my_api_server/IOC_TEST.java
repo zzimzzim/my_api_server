@@ -1,6 +1,8 @@
 package com.example.my_api_server;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController //컨트롤러로 등록하겠다라는 의미
 @RequestMapping("/test") //api 서버 주소
 @RequiredArgsConstructor //DI를 자동으로 해주는 어노테이션(생성자 주입방식을 어노테이션으로 사용하는 방법)
-
 public class IOC_TEST {
 //1. 필드 주입(잘안써요!)
 //    @Autowired
@@ -20,8 +21,8 @@ public class IOC_TEST {
 //
 //        return ioc2;
 //    }
-//
-//    @Autowired
+///
+//     @Autowired
 //    public IOC setIoc2(IOC ioc){
 //        ioc2=ioc;
 //

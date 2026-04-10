@@ -22,6 +22,8 @@ public class Counter {
             thread.start();
             threads.add(thread);//스레드 리스드에 스레드 삽입
         }
+
+        //스레드의 일이 다 끝날때까지 기다림
         threads.forEach(thread ->
         {
             try {

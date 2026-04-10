@@ -47,7 +47,7 @@ public class Order {
     @Column(nullable = false)
     private LocalDateTime orderTime; //주문 시간
 
-    //루트 엔티티(에거리거트 루트)
+    //정적 팩토리 패턴
     public static Order createOrder(Member member, LocalDateTime orderTime) {
         Order order = Order.builder()
                         .buyer(member)
@@ -58,6 +58,7 @@ public class Order {
         return order;
     }
 
+    //루트 엔티티(에거리거트 루트)
     public OrderProduct createOrderProduct(Long orderCount, Product product) {
         return OrderProduct.builder()
                  .order(this)
