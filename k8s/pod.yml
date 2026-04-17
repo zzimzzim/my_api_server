@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod #오브젝트 종류 명시
+metadata:
+  name: my-nginx #dockerfile로 만든 스프링 부트 이미지 지정
+  labels:
+    app: nginx #service가 해당 pod를 찾을 때 사용
+
+spec:
+  containers: #컨테이너 설정
+    - name: nginx #컨테이너 이름
+      image: nginx:1.25 #이미지 지정
+      ports:
+        - containerPort: 80 #컨테이너 포트 지정

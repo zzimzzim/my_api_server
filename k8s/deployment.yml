@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment #오브젝트 종류 명시
+metadata:
+  name: my-nginx #dockerfile로 만든 스프링 부트 이미지 지정
+spec:
+  replicas: 3 #항상 3개의 pod를 유지하도록 설정
+  selector:
+    matchLabels:
+      app: nginx #해당 레이블을 가진 pod를 관리 대상으로 지정
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1 #동시에 최대 1개 pod 중단 허용
+      maxSurge: 1 #동시에 최대 1개 pod 초과 생성 허용
+  template: # 아래부터가 Pod 정의 (Pod YAML과 동일한 구조)
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80

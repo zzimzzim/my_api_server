@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service # 오브젝트 종류 명시
+metadata:
+  name: nginx-svc # dockerfile로 만든 스프링 부트 이미지 지정
+spec:
+  type: NodePort # service 타입 지정
+  selector:
+    app: nginx # 해당 레이블을 가진 pod들에게 트래픽 전달
+  ports:
+    - port: 80 # service내부 포트
+      targetPort: 80 # pod의 컨테이너 포트
+      nodePort: 30080 #외부에서 접근하는 포트
